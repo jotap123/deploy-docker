@@ -1,0 +1,9 @@
+azure-batch
+docker
+crontab
+python-dotenv
+tomli
+PyYAML
+click
+colored_traceback
+azure-cli

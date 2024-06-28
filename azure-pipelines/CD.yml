@@ -1,0 +1,41 @@
+trigger:
+ branches:
+  include:
+   - master
+   - main
+
+jobs:
+  - job: UpdateAML
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - checkout: self
+      persistCredentials: true
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.12'
+        addToPath: true
+        architecture: x64
+      displayName: Python version 3.12
+    - task: DockerInstaller@0
+      displayName: Docker Installer
+      inputs:
+        dockerVersion: 23.0.3
+        releaseType: stable
+    - task: DownloadSecureFile@1
+      name: deploy_file
+      displayName: Download deploy file
+      inputs:
+        secureFile: .env
+    - script: mv $(deploy_file.secureFilePath) .env
+      displayName: Make .env available
+    - script: |
+        pip install -r requirements.deploy.txt
+      displayName: Install requirements
+    - script: |
+        python deploy_code.py
+      displayName: deploy code
+    - script: |
+        python deploy_infra.py
+      displayName: deploy infrastructure
+    

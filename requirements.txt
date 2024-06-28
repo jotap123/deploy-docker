@@ -1,0 +1,6 @@
+# external requirements
+paeio
+click
+colorlog
+colored-traceback
+scikit-learn

@@ -1,0 +1,23 @@
+# DAG specification file
+#
+# Here we specify all the available DAGS and subtasks they're composed of.
+
+# Here additional configurations for the DAG
+config:
+  # Set the timezone to specify the schedule
+  # See here for a list of timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  timezone: America/Sao_Paulo
+
+####
+# DAGS
+####
+
+pipeline_train:
+  #cron: 40 17 10 * *
+  tasks:
+    - train
+
+pipeline_daily:
+  #cron: 00 07 * * *
+  tasks:
+    - predict
